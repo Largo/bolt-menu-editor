@@ -4,7 +4,7 @@
     "type": "bolt-extension",
     "keywords": ["visual", "menu", "editor", "admin", "tool"],
     "require": {
-        "bolt/bolt": ">=2.2.10,<3.0.0"
+        "bolt/bolt": "^3.0"
     },
     "authors": [
         {
@@ -14,9 +14,6 @@
         }
     ],
     "autoload": {
-        "files": [
-            "init.php"
-        ],
         "psr-4": {
             "Bolt\\Extension\\bacboslab\\menueditor\\": ""
         }
@@ -24,8 +21,9 @@
     "extra": {
         "bolt-icon": "bolt-menu-editor.png",
         "branch-alias": {
-            "dev-master": "2.0.*"
+            "dev-master": "3.0.*"
         },
-        "bolt-assets": "assets"
+        "bolt-assets": "web",
+        "bolt-class": "Bolt\\Extension\\bacboslab\\menueditor\\MenuEditorExtension"
     }
 }
