@@ -2,6 +2,7 @@
 
 namespace Bolt\Extension\bacboslab\menueditor;
 
+use Bolt\Extension\SimpleExtension;
 use Bolt\Translation\Translator as Trans;
 use Symfony\Component\HttpFoundation\Response,
     Symfony\Component\Translation\Loader as TranslationLoader;
@@ -16,7 +17,7 @@ class MenuEditorException extends \Exception {};
  * @package MenuEditor
  * @author  Steven Wüthrich / bacbos lab (steven.wuethrich@me.com)
  */
-class Extension extends \Bolt\BaseExtension
+class MenuEditorExtension extends SimpleExtension
 {
     private $dev = false;
 
@@ -44,7 +45,7 @@ class Extension extends \Bolt\BaseExtension
     {
         $this->configDirectory = $this->app['resources']->getPath('config');
         $this->config = $this->getConfig();
-        
+
         if (!isset($this->config['backupsFolder'])) {
             $this->backupDir = __DIR__ . '/backups';
         } else {
@@ -96,7 +97,7 @@ class Extension extends \Bolt\BaseExtension
                 break;
             }
         }
-        
+
         foreach ($this->config['allowCreateNew'] as $role) {
             if ($this->app['users']->hasRole($currentUserId, $role)) {
                 $this->allowCreateNew = true;
@@ -171,7 +172,7 @@ class Extension extends \Bolt\BaseExtension
         }
 
         // add MenuEditor template namespace to twig
-        $this->app['twig.loader.filesystem']->addPath(__DIR__.'/views/', 'MenuEditor');
+        $this->app['twig.loader.filesystem']->addPath(__DIR__ . '/templates/', 'MenuEditor');
 
         /**
          * process xhr-post
@@ -395,16 +396,16 @@ class Extension extends \Bolt\BaseExtension
 
         if ($this->dev) {
             $urlbase = $this->app['resources']->getUrl('extensions') . 'local/bacboslab/menueditor/';
-            $assets = '<script data-main="{urlbase}assets/app" src="{urlbase}assets/bower_components/requirejs/require.js"></script>';
+            $assets = '<script data-main="{urlbase}web/app" src="{urlbase}web/bower_components/requirejs/require.js"></script>';
         } else {
             $urlbase = $this->app['resources']->getUrl('extensions') . 'vendor/bacboslab/menueditor/';
-            //$assets = '<script src="{urlbase}assets/app.min.js"></script>';
+            //$web = '<script src="{urlbase}web/app.min.js"></script>';
 
             // current workaround for firefox issues [v 2.0.2]
-            $assets = '<script data-main="{urlbase}assets/app" src="{urlbase}assets/bower_components/requirejs/require.js"></script>';
+            $assets = '<script data-main="{urlbase}web/app" src="{urlbase}web/bower_components/requirejs/require.js"></script>';
         }
 
-        $assets .= '<link rel="stylesheet" href="{urlbase}assets/bolt-menu-editor/menueditor.css">';
+        $assets .= '<link rel="stylesheet" href="{urlbase}web/bolt-menu-editor/menueditor.css">';
         $assets = preg_replace('~\{urlbase\}~', $urlbase, $assets);
 
         // Insert just before </head>
