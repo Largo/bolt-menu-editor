@@ -31,14 +31,6 @@ class MenuEditorExtension extends SimpleExtension
     public  $config;
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'MenuEditor';
-    }
-
-    /**
      * Initialize extension
      */
     public function initialize()
